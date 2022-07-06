@@ -13,6 +13,18 @@ def limpiar():
     else:
         os.system("clear")
 
+def menu():
+    limpiar()
+    print(f"""
+          
+{Fore.LIGHTBLUE_EX}──▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}──▄████▄
+{Fore.LIGHTBLUE_EX}─▒─▄▒─▄▒─{Fore.LIGHTYELLOW_EX}─███▄█▀
+{Fore.LIGHTBLUE_EX}─▒▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}▐████──█─█
+{Fore.LIGHTBLUE_EX}─▒▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}─█████▄
+{Fore.LIGHTBLUE_EX}─▒─▒─▒─▒─{Fore.LIGHTYELLOW_EX}──▀████▀
+
+          """)
+
 def infobasica():
     plataforma = platform.uname()
     limpiar()
@@ -76,4 +88,4 @@ def memoria():
     print("#")
     print("# ")
 
-memoria()
+menu()
