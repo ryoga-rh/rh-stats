@@ -1,3 +1,4 @@
+from ast import For
 from dis import dis
 from traceback import print_tb
 import psutil
@@ -13,16 +14,23 @@ def limpiar():
     else:
         os.system("clear")
 
-def menu():
+def banner():
     limpiar()
-    print(f"""
-          
-{Fore.LIGHTBLUE_EX}──▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}──▄████▄
-{Fore.LIGHTBLUE_EX}─▒─▄▒─▄▒─{Fore.LIGHTYELLOW_EX}─███▄█▀
-{Fore.LIGHTBLUE_EX}─▒▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}▐████──█─█
-{Fore.LIGHTBLUE_EX}─▒▒▒▒▒▒▒─{Fore.LIGHTYELLOW_EX}─█████▄
-{Fore.LIGHTBLUE_EX}─▒─▒─▒─▒─{Fore.LIGHTYELLOW_EX}──▀████▀
+    print(f"""    
+──{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▄████▄{Fore.WHITE}
+─{Fore.LIGHTBLUE_EX}▒─▄▒─▄▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}███▄█▀{Fore.WHITE}
+─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}▐████{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}
+─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█████▄{Fore.WHITE}
+─{Fore.LIGHTBLUE_EX}▒─▒─▒─▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▀████▀{Fore.WHITE}
+{Fore.RESET}
+          """)
 
+def menu():
+    banner()
+    print(f"""
+{Fore.RED}¡Herramienta en desarrollo!{Fore.RESET}
+
+e
           """)
 
 def infobasica():
