@@ -1,12 +1,13 @@
-from ast import For
 from dis import dis
 from traceback import print_tb
 import psutil
 import platform
 from datetime import datetime
+import time
 import os
 from colorama import *
 import sys
+import signal
 
 def limpiar():
     if sys.platform == "win32":
@@ -14,24 +15,48 @@ def limpiar():
     else:
         os.system("clear")
 
-def banner():
+def ctrlc(signal, freame):
+    limpiar()
+    logo()
+    print(Fore.RED+"Precionaste ctrl c, el proceso termino, saliendo...")
+    time.sleep(2)
+    salida()
+
+signal.signal(signal.SIGINT, ctrlc)
+
+def salida():
+    limpiar()
+
+
+def logo():
     limpiar()
     print(f"""    
-──{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▄████▄{Fore.WHITE}
-─{Fore.LIGHTBLUE_EX}▒─▄▒─▄▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}███▄█▀{Fore.WHITE}
-─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}▐████{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}
-─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█████▄{Fore.WHITE}
-─{Fore.LIGHTBLUE_EX}▒─▒─▒─▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▀████▀{Fore.WHITE}
-{Fore.RESET}
-          """)
+    ──{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▄████▄{Fore.WHITE}
+    ─{Fore.LIGHTBLUE_EX}▒─▄▒─▄▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}███▄█▀{Fore.WHITE}
+    ─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}▐████{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}─{Fore.LIGHTYELLOW_EX}█{Fore.WHITE}
+    ─{Fore.LIGHTBLUE_EX}▒▒▒▒▒▒▒{Fore.WHITE}──{Fore.LIGHTYELLOW_EX}█████▄{Fore.WHITE}
+    ─{Fore.LIGHTBLUE_EX}▒─▒─▒─▒{Fore.WHITE}───{Fore.LIGHTYELLOW_EX}▀████▀{Fore.WHITE}
+    {Fore.RESET}
+              """)
 
 def menu():
-    banner()
+    logo()
+    print(f"{Fore.LIGHTCYAN_EX}Estas son las funciones que tiene esta herramienta por ahora...{Fore.RESET}")
     print(f"""
-{Fore.RED}¡Herramienta en desarrollo!{Fore.RESET}
-
-e
-          """)
+    {Fore.LIGHTGREEN_EX}1.- Informacion Basica: Tiene informacion basica de tu dispositivo, como Sistema operativo, Librerias, Version y otras cosas.
+    2.- Informacion del cpu: Nucleos y frecuencia
+    3.- Memoria: Memoria total y disponible
+    """)
+    eleccion = input("Que quieres ver ahora? ")
+    if eleccion == "1" or eleccion == "basica":
+        infobasica()
+    elif eleccion == "2" or eleccion == "cpu":
+        cpu()
+    elif eleccion == "3" or eleccion == "memoria":
+        memoria()
+    else:
+        print("Opcion no valida, intentalo de nuevo")
+        menu()
 
 def infobasica():
     plataforma = platform.uname()
@@ -65,6 +90,8 @@ def cpu():
     print(Fore.LIGHTGREEN_EX)
     print("<" + "=" * 39 + " CPU Info " + "=" * 39 + ">")
     print("#")
+    print(f"# Procesadores Logicos")
+    print("#")
     print(f"# Nucleos Fisicos")
     print(f"# {psutil.cpu_count(logical= False)}")
     print(f"#")
@@ -96,4 +123,66 @@ def memoria():
     print("#")
     print("# ")
 
+
+def load_animation():
+    load_str = "..."
+    ls_len = len(load_str)
+
+    animacion = "|/-\\"
+    contador = 0
+
+    tiempocontador = 0
+
+    i = 0
+
+    while (tiempocontador != 100):
+
+        time.sleep(0.075)
+
+        load_str_list = list(load_str)
+
+        x = ord(load_str_list[i])
+
+        y = 0
+
+        if x != 32 and x != 46:
+            if x > 90:
+                y = x - 32
+            else:
+                y = x + 32
+            load_str_list[i] = chr(y)
+
+        res = ''
+        for j in range(ls_len):
+            res = res + load_str_list[j]
+
+        sys.stdout.write("\r" + res + animacion[contador])
+        sys.stdout.flush()
+
+        load_str = res
+
+        contador = (contador + 1) % 4
+        i = (i + 1) % ls_len
+        tiempocontador = tiempocontador + 1
+
+    if os.name == "nt":
+        os.system("cls")
+
+
+    else:
+        os.system("clear")
+
+
+
+
+def procesoTerminado():
+    print(f"""
+El proceso termino, Que deseas hacer ahora? 
+1.- Volver al menu
+2.- Salir
+
+""")
+
+load_animation()
 menu()
+
